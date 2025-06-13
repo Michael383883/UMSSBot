@@ -177,7 +177,7 @@ pytest tests/
 
 ## 👥 Equipo de Desarrollo
 
-- **[Tu Nombre]** - Desarrollador Principal
+- Grupo 9
 - **IA 2** - Curso de Inteligencia Artificial
 
 ## 📄 Licencia
