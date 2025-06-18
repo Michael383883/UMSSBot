@@ -53,7 +53,7 @@ Un chatbot inteligente diseñado para ayudar a estudiantes nuevos y antiguos de 
 
 1. **Clonar el repositorio**
 ```bash
-git clone https://github.com/tu-usuario/UMSSBot.git
+git clone https://github.com/Michael383883/UMSSBot.git
 cd UMSSBot
 ```
 
