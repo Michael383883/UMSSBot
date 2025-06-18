@@ -1,4 +1,4 @@
-# 🤖 UMSSBot - Asistente Virtual para Estudiantes UMSS
+# 🤖 UMSSBot - CHAT DE SUGERENCIAS PARA ESTUDIANTES DE PRIMER SEMESTRE
 
 [![Python Version](https://img.shields.io/badge/python-3.8+-blue.svg)](https://python.org)
 [![SpaCy](https://img.shields.io/badge/spaCy-3.6+-green.svg)](https://spacy.io)
