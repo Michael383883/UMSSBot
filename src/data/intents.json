@@ -1,0 +1,398 @@
+{
+    "intents": [
+        {
+            "tag": "saludo",
+            "patterns": [
+                "hola",
+                "buenas",
+                "buenos días",
+                "buenas tardes",
+                "buenas noches",
+                "hey",
+                "qué tal",
+                "saludos",
+                "hi",
+                "hello",
+                "buenas tardes",
+                "que onda",
+                "como estas",
+                "cómo estás"
+            ],
+            "responses": [
+                "¡Hola! Soy el asistente virtual de la Facultad de Tecnología - Ingeniería Informática. ¿En qué puedo ayudarte hoy?",
+                "¡Hola! Estoy aquí para ayudarte con tu horario de clases, recomendaciones de docentes, ubicación de aulas y más. ¿Qué necesitas?",
+                "¡Buenos días! Soy tu asistente académico. Puedo ayudarte con información sobre materias, profesores, horarios y trámites. ¿En qué te ayudo?"
+            ]
+        },
+        {
+            "tag": "recomendacion_docente",
+            "patterns": [
+                "qué docente me recomiendas",
+                "cuál es el mejor profesor",
+                "recomiéndame un docente",
+                "qué profesor es bueno",
+                "cuál docente es mejor para",
+                "profesor recomendado",
+                "mejor docente",
+                "docente recomendado",
+                "quien enseña bien",
+                "profesor que explique bien",
+                "docente con buenas calificaciones"
+            ],
+            "responses": [
+                "¿Para qué materia necesitas recomendación de docente? Puedo sugerirte los mejores profesores según la asignatura.",
+                "Me encanta ayudarte a elegir el mejor docente. ¿De qué materia estamos hablando?"
+            ]
+        },
+        {
+            "tag": "algebra",
+            "patterns": [
+                "algebra",
+                "álgebra",
+                "matemáticas básicas",
+                "algebra 1",
+                "álgebra 1",
+                "álgebra lineal",
+                "algebra lineal",
+                "matemática 1",
+                "matematica 1",
+                "ecuaciones",
+                "polinomios"
+            ],
+            "responses": [
+                "Para Álgebra I te recomiendo altamente al profesor RODRIGUEZ SEJAS JUAN ANTONIO. Es excelente docente, muy didáctico en matemáticas y tiene mucha paciencia con los estudiantes. Sus horarios son: MA 9:45-11:15 (aula 661), MI 8:15-9:45 (aula 692E), VI 9:45-11:15 (aula 692F).",
+                "El profesor RODRIGUEZ SEJAS JUAN ANTONIO es tu mejor opción para Álgebra. Los estudiantes lo califican muy bien por su metodología clara y su disponibilidad para consultas."
+            ]
+        },
+        {
+            "tag": "calculo",
+            "patterns": [
+                "calculo",
+                "cálculo",
+                "calculo 1",
+                "cálculo 1",
+                "derivadas",
+                "integrales",
+                "límites",
+                "limites",
+                "análisis matemático",
+                "analisis matematico",
+                "cálculo diferencial",
+                "calculo diferencial",
+                "cálculo integral",
+                "calculo integral"
+            ],
+            "responses": [
+                "Para Cálculo I te recomiendo al profesor ROJAS ZURITA RAMIRO. Es muy experimentado, explica excelentemente los conceptos y tiene gran paciencia para resolver dudas. Horarios: LU 6:45-8:15 (aula 622), JU 8:15-9:45 (aula 625), JU 8:15-9:45 (aula 692E).",
+                "El profesor ROJAS ZURITA RAMIRO es excepcional para Cálculo. Los estudiantes destacan su capacidad para hacer comprensibles conceptos complejos."
+            ]
+        },
+        {
+            "tag": "ingles",
+            "patterns": [
+                "inglés",
+                "ingles",
+                "english",
+                "inglés 1",
+                "ingles 1",
+                "inglés básico",
+                "ingles basico",
+                "idioma inglés",
+                "idioma ingles",
+                "lengua extranjera",
+                "inglés técnico",
+                "ingles tecnico"
+            ],
+            "responses": [
+                "Para Inglés I te recomiendo a la profesora CESPEDES GUIZADA MARIA BENITA. Es una excelente profesora, muy paciente con principiantes y tiene métodos de enseñanza muy efectivos. Horarios: MA 8:15-9:45 (aula 692B), VI 8:15-9:45 (aula 691C).",
+                "La profesora CESPEDES GUIZADA MARIA BENITA es ideal para Inglés. Los estudiantes valoran mucho su paciencia y su enfoque práctico."
+            ]
+        },
+        {
+            "tag": "fisica",
+            "patterns": [
+                "física",
+                "fisica",
+                "física general",
+                "fisica general",
+                "física 1",
+                "fisica 1",
+                "mecánica",
+                "mecanica",
+                "cinemática",
+                "cinematica",
+                "dinámica",
+                "dinamica",
+                "termodinámica",
+                "termodinamica"
+            ],
+            "responses": [
+                "Para Física General te recomiendo al profesor VALENZUELA MIRANDA ROBERTO. Es excelente en física, hace experimentos demostrativos en clase y explica los conceptos de manera muy clara. Horarios: MA 11:15-12:45 (aula 612), VI 14:15-15:45 (aula 650C).",
+                "El profesor VALENZUELA MIRANDA ROBERTO es fantástico para Física. Los estudiantes aman sus clases prácticas y experimentos."
+            ]
+        },
+        {
+            "tag": "programacion",
+            "patterns": [
+                "programación",
+                "programacion",
+                "introducción a la programación",
+                "introduccion a la programacion",
+                "coding",
+                "programar",
+                "algoritmos",
+                "lógica de programación",
+                "logica de programacion",
+                "lenguajes de programación",
+                "lenguajes de programacion",
+                "python",
+                "java",
+                "c++",
+                "javascript"
+            ],
+            "responses": [
+                "Para Introducción a la Programación tienes excelentes opciones:\n\n1. **SALAZAR SERRUDO CARLA** - Perfecta para principiantes, muy paciente y explica desde lo básico\n2. **COSTAS JAUREGUI VLADIMIR ABEL** - Mucha experiencia práctica, enfoque en proyectos reales\n3. **BLANCO COCA LETICIA** - Muy organizada, excelente metodología paso a paso\n\n¿Te interesa conocer los horarios de alguno en particular?",
+                "¡Programación es fundamental! Te recomiendo especialmente a SALAZAR SERRUDO CARLA si eres principiante, o COSTAS JAUREGUI VLADIMIR si ya tienes algo de experiencia. ¿Cuál prefieres?"
+            ]
+        },
+        {
+            "tag": "horario",
+            "patterns": [
+                "armar horario",
+                "crear horario",
+                "mi horario",
+                "ver horario",
+                "horario de clases",
+                "planificar horario",
+                "organizar materias",
+                "diseñar horario",
+                "estructurar horario",
+                "horario personalizado",
+                "distribución de materias",
+                "cronograma de clases"
+            ],
+            "responses": [
+                "¡Perfecto! Te ayudo a armar tu horario personalizado. Para empezar, ¿eres estudiante de primer semestre o ya tienes materias avanzadas?",
+                "Excelente, vamos a crear tu horario ideal. ¿Con qué materia te gustaría empezar? ¿Tienes alguna preferencia de horarios (mañana, tarde)?",
+                "Te ayudo a organizar tu horario académico. ¿Cuántas materias planeas tomar este semestre y cuáles son tus prioridades de horario?"
+            ]
+        },
+        {
+            "tag": "valorados",
+            "patterns": [
+                "valorados",
+                "donde comprar valorados",
+                "valorado",
+                "2da instancia",
+                "segunda instancia",
+                "fotocopias",
+                "exámenes",
+                "examenes pasados",
+                "exámenes anteriores",
+                "examenes anteriores",
+                "material de estudio",
+                "ejercicios resueltos",
+                "bancos de preguntas"
+            ],
+            "responses": [
+                "Puedes conseguir valorados y material de estudio en estos lugares:\n\n📍 **Fotocopiadora Central**\n   • Ubicación: Planta baja del edificio principal\n   • Horarios: 7:00 - 19:00 hrs\n   • Amplia colección de valorados por materia\n\n📍 **Centro de Estudiantes**\n   • Ubicación: Segundo piso, ala este\n   • Horarios: 8:00 - 18:00 hrs\n   • Precios estudiantiles\n\n📍 **Librería Universitaria**\n   • Ubicación: Frente a la facultad\n   • Horarios: 7:30 - 19:30 hrs\n   • Tel: 77123456\n   • Mayor variedad y material actualizado"
+            ]
+        },
+        {
+            "tag": "aulas",
+            "patterns": [
+                "dónde está el aula",
+                "donde esta el aula",
+                "ubicación aula",
+                "ubicacion aula",
+                "cómo llego al aula",
+                "como llego al aula",
+                "aula",
+                "salón",
+                "salon",
+                "laboratorio",
+                "lab",
+                "edificio",
+                "piso",
+                "ala"
+            ],
+            "responses": [
+                "¿Qué aula específica estás buscando? Dime el número (ej: 661, 692E, 625) y te doy la ubicación exacta con indicaciones para llegar.",
+                "Te ayudo a ubicar cualquier aula. ¿Podrías decirme el número del aula que buscas? También puedo explicarte la distribución general de los edificios."
+            ]
+        },
+        {
+            "tag": "ubicacion_aulas_especificas",
+            "patterns": [
+                "aula 661",
+                "aula 692E",
+                "aula 692F",
+                "aula 692B",
+                "aula 691C",
+                "aula 622",
+                "aula 625",
+                "aula 612",
+                "aula 650C"
+            ],
+            "responses": [
+                "**Ubicaciones de aulas principales:**\n\n🏢 **Edificio Principal:**\n• Aulas 6XX (612, 622, 625): Segundo piso, ala norte\n• Aula 661: Segundo piso, ala central\n\n🏢 **Edificio de Laboratorios:**\n• Aulas 691C, 692B, 692E, 692F: Tercer piso\n• Aula 650C: Segundo piso, ala sur\n\n💡 **Tip:** Las aulas que terminan en letra están en el edificio nuevo de laboratorios."
+            ]
+        },
+        {
+            "tag": "quitar_materia",
+            "patterns": [
+                "quitar materia",
+                "eliminar materia",
+                "borrar materia",
+                "remover materia",
+                "sacar materia",
+                "quitar del horario",
+                "cancelar materia",
+                "dar de baja materia"
+            ],
+            "responses": [
+                "¿Qué materia quieres quitar de tu horario? Te ayudo a reorganizar el resto de materias si es necesario.",
+                "Sin problema, ¿cuál materia quieres eliminar? También puedo sugerirte alternativas si hay conflictos de horario."
+            ]
+        },
+        {
+            "tag": "materias_disponibles",
+            "patterns": [
+                "qué materias hay",
+                "que materias hay",
+                "materias disponibles",
+                "lista de materias",
+                "materias del semestre",
+                "pensum",
+                "plan de estudios",
+                "malla curricular",
+                "curriculum"
+            ],
+            "responses": [
+                "**Materias principales disponibles:**\n\n📚 **Matemáticas:**\n• Álgebra I\n• Cálculo I\n• Estadística\n\n💻 **Programación:**\n• Introducción a la Programación\n• Estructura de Datos\n• Algoritmos\n\n🔬 **Ciencias:**\n• Física General\n• Química General\n\n🌐 **Idiomas:**\n• Inglés I, II, III\n\n¿Te interesa información específica de alguna materia?"
+            ]
+        },
+        {
+            "tag": "tramites",
+            "patterns": [
+                "trámites",
+                "tramites",
+                "inscripción",
+                "inscripcion",
+                "matrícula",
+                "matricula",
+                "documentos",
+                "requisitos",
+                "papeles",
+                "certificados",
+                "titulación",
+                "titulacion"
+            ],
+            "responses": [
+                "**Información de trámites académicos:**\n\n📋 **Oficina de Registro Académico:**\n• Ubicación: Planta baja, oficina 105\n• Horarios: Lun-Vie 8:00-16:00\n• Inscripciones, certificados, historiales\n\n📋 **Secretaría de Facultad:**\n• Ubicación: Primer piso, oficina 201\n• Horarios: Lun-Vie 8:00-18:00\n• Información general, consultas\n\n¿Qué trámite específico necesitas realizar?"
+            ]
+        },
+        {
+            "tag": "laboratorios",
+            "patterns": [
+                "laboratorio",
+                "laboratorios",
+                "lab",
+                "labs",
+                "computadoras",
+                "computación",
+                "equipos",
+                "software",
+                "hardware"
+            ],
+            "responses": [
+                "**Laboratorios disponibles:**\n\n💻 **Lab. de Programación (Lab A):**\n• 30 computadoras con software de desarrollo\n• Horarios libres: Lun-Vie 14:00-18:00\n\n💻 **Lab. de Redes (Lab B):**\n• Equipos especializados en networking\n• Reservas: secretaria@fit.edu.bo\n\n💻 **Lab. de Hardware:**\n• Componentes y herramientas\n• Acceso con docente\n\n¿Necesitas reservar algún laboratorio?"
+            ]
+        },
+        {
+            "tag": "biblioteca",
+            "patterns": [
+                "biblioteca",
+                "libros",
+                "bibliografía",
+                "bibliografia",
+                "material bibliográfico",
+                "material bibliografico",
+                "préstamos",
+                "prestamos",
+                "catálogo",
+                "catalogo"
+            ],
+            "responses": [
+                "**Biblioteca de la Facultad:**\n\n📚 **Ubicación:** Primer piso, ala oeste\n📚 **Horarios:** Lun-Vie 7:00-20:00, Sáb 8:00-12:00\n📚 **Servicios:**\n• Préstamo de libros (3 días)\n• Sala de lectura silenciosa\n• Computadoras para consulta\n• Acceso a bases de datos digitales\n\n📞 **Contacto:** biblioteca@fit.edu.bo\n\n¿Buscas algún libro específico?"
+            ]
+        },
+        {
+            "tag": "ayuda_general",
+            "patterns": [
+                "ayuda",
+                "help",
+                "qué puedes hacer",
+                "que puedes hacer",
+                "funciones",
+                "comandos",
+                "opciones",
+                "menú",
+                "menu",
+                "servicios"
+            ],
+            "responses": [
+                "**¿En qué puedo ayudarte? 🤖**\n\n📅 **Horarios:** Crear y organizar tu horario personalizado\n👨‍🏫 **Docentes:** Recomendaciones de los mejores profesores\n📍 **Ubicaciones:** Encontrar aulas, laboratorios y oficinas\n📚 **Material:** Dónde conseguir valorados y libros\n📋 **Trámites:** Información sobre inscripciones y documentos\n💻 **Laboratorios:** Disponibilidad y reservas\n📖 **Biblioteca:** Horarios y servicios\n\n¡Solo pregúntame lo que necesites!"
+            ]
+        },
+        {
+            "tag": "contacto",
+            "patterns": [
+                "contacto",
+                "teléfono",
+                "telefono",
+                "email",
+                "correo",
+                "dirección",
+                "direccion",
+                "ubicación facultad",
+                "ubicacion facultad"
+            ],
+            "responses": [
+                "**Información de contacto:**\n\n📧 **Email:** info@fit.edu.bo\n📞 **Teléfono:** +591 4 123-4567\n📍 **Dirección:** Av. Tecnológica 123, Cochabamba\n\n**Redes sociales:**\n• Facebook: @FIT.UMSS\n• Instagram: @fit_umss\n\n**Horarios de atención:**\n• Lunes a Viernes: 7:00 - 20:00\n• Sábados: 8:00 - 12:00"
+            ]
+        },
+        {
+            "tag": "despedida",
+            "patterns": [
+                "adiós",
+                "adios",
+                "hasta luego",
+                "nos vemos",
+                "chau",
+                "bye",
+                "gracias",
+                "muchas gracias",
+                "te agradezco",
+                "perfecto",
+                "listo",
+                "ok",
+                "genial"
+            ],
+            "responses": [
+                "¡Hasta luego! Que tengas un excelente día y mucho éxito en tus estudios. 📚✨",
+                "¡Adiós! Espero haberte ayudado. Si tienes más preguntas, estaré aquí. ¡Que te vaya muy bien! 🎓",
+                "¡Nos vemos! Recuerda que puedes consultarme cuando necesites ayuda con tu vida académica. ¡Éxitos! 🚀"
+            ]
+        },
+        {
+            "tag": "no_entiendo",
+            "patterns": [],
+            "responses": [
+                "Disculpa, no entendí tu consulta. ¿Podrías reformular tu pregunta? Puedo ayudarte con horarios, docentes, ubicaciones, trámites y más información académica.",
+                "No estoy seguro de entender. ¿Te refieres a información sobre materias, profesores, aulas o algún trámite específico?",
+                "Perdón, no comprendí. Escribe 'ayuda' para ver todas las cosas con las que puedo asistirte."
+            ]
+        }
+    ]
+}
