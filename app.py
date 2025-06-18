@@ -1,112 +1,78 @@
-# from flask import Flask, render_template, request, jsonify, session
-# import os
-# import uuid
-# from src.chatbot import UMSSChatBot
-
-# app = Flask(__name__)
-# app.secret_key = 'umss_chatbot_secret_key_2024'
-
-# intents_file = os.path.join('src', 'data', 'intents.json')
-# umss_info_file = os.path.join('src', 'data', 'umss_info.json')
-# chatbot = UMSSChatBot(intents_file, umss_info_file)
-
-
-# @app.route('/')
-# def index():
-#     if 'user_id' not in session:
-#         session['user_id'] = str(uuid.uuid4())
-#     return render_template('index.html')
-
-
-# @app.route('/chat', methods=['POST'])
-# def chat():
-#     user_message = request.json.get('message', '')
-#     user_id = session.get('user_id', 'default')
-
-#     bot_response = chatbot.get_response(user_message, user_id)
-#     return jsonify({'response': bot_response})
-
-
-# @app.route('/schedule', methods=['GET'])
-# def get_schedule():
-#     user_id = session.get('user_id', 'default')
-#     schedule = chatbot.response_generator.schedule_manager.get_user_schedule(
-#         user_id)
-#     return jsonify(schedule)
-
-
-# @app.route('/clear_schedule', methods=['POST'])
-# def clear_schedule():
-#     user_id = session.get('user_id', 'default')
-#     if user_id in chatbot.response_generator.schedule_manager.user_schedules:
-#         del chatbot.response_generator.schedule_manager.user_schedules[user_id]
-#     return jsonify({'success': True})
-
-
-# if __name__ == '__main__':
-#     app.run(debug=True)
-
-
+# Importación de módulos necesarios para la aplicación Flask
 from flask import Flask, render_template, request, jsonify, session
-import os
-import uuid
-from src.chatbot import UMSSChatBot
+import os  # Para manejar rutas del sistema
+import uuid  # Para generar identificadores únicos de usuario
+from src.chatbot import UMSSChatBot  # Importa la clase principal del chatbot
 
+# Inicializa la aplicación Flask
 app = Flask(__name__)
+
+# Clave secreta necesaria para manejar sesiones de usuario
 app.secret_key = 'umss_chatbot_secret_key_2024'
 
-# Configurar rutas de archivos
-intents_file = os.path.join('src', 'data', 'intents.json')
+# Rutas a los archivos de configuración del chatbot
+intents_file = os.path.join(
+    'src', 'data', 'intents.json')  # Archivo de intenciones
+# Archivo con datos de materias/docentes
 umss_info_file = os.path.join('src', 'data', 'umss_info.json')
 
-# Verificar que los archivos existen
+# Verificaciones para asegurar que los archivos existen antes de usarlos
 if not os.path.exists(intents_file):
     print(f"Advertencia: No se encontró {intents_file}")
 if not os.path.exists(umss_info_file):
     print(f"Advertencia: No se encontró {umss_info_file}")
 
-# Inicializar chatbot
+# Inicializa la instancia del chatbot pasando los archivos necesarios
 chatbot = UMSSChatBot(intents_file, umss_info_file)
 
 
 @app.route('/')
 def index():
-    """Página principal"""
+    """Ruta principal que muestra la interfaz del chatbot"""
     if 'user_id' not in session:
-        session['user_id'] = str(uuid.uuid4())
-    return render_template('index.html')
+        session['user_id'] = str(uuid.uuid4())  # Asigna un ID único al usuario
+    return render_template('index.html')  # Renderiza la página HTML principal
 
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    """Endpoint para el chat"""
+    """Ruta POST para recibir mensajes del usuario y devolver respuestas del bot"""
     try:
+        # Obtiene mensaje JSON del frontend
         user_message = request.json.get('message', '')
+        # Recupera ID del usuario desde la sesión
         user_id = session.get('user_id', 'default')
 
-        print(f"DEBUG - Usuario {user_id}: {user_message}")  # Debug
+        # Log para depuración
+        print(f"DEBUG - Usuario {user_id}: {user_message}")
 
-        bot_response = chatbot.get_response(user_message, user_id)
+        bot_response = chatbot.get_response(
+            user_message, user_id)  # Obtiene respuesta del chatbot
 
-        print(f"DEBUG - Respuesta: {bot_response[:100]}...")  # Debug
+        # Muestra parte de la respuesta para depurar
+        print(f"DEBUG - Respuesta: {bot_response[:100]}...")
 
+        # Devuelve respuesta al frontend
         return jsonify({'response': bot_response})
 
     except Exception as e:
-        print(f"Error en chat: {e}")
+        print(f"Error en chat: {e}")  # Muestra errores si hay fallos
         return jsonify({'response': 'Lo siento, ocurrió un error. Por favor intenta de nuevo.'}), 500
 
 
 @app.route('/schedule', methods=['GET'])
 def get_schedule():
-    """Obtener horario del usuario"""
+    """Ruta GET para obtener el horario del usuario actual"""
     try:
+        # Recupera el ID de la sesión
         user_id = session.get('user_id', 'default')
+        # Obtiene el horario usando el chatbot
         schedule = chatbot.get_schedule(user_id)
 
-        print(f"DEBUG - Horario para {user_id}: {schedule}")  # Debug
+        # Log para depuración
+        print(f"DEBUG - Horario para {user_id}: {schedule}")
 
-        return jsonify(schedule)
+        return jsonify(schedule)  # Devuelve el horario en formato JSON
 
     except Exception as e:
         print(f"Error obteniendo horario: {e}")
@@ -115,13 +81,15 @@ def get_schedule():
 
 @app.route('/clear_schedule', methods=['POST'])
 def clear_schedule():
-    """Limpiar horario del usuario"""
+    """Ruta POST para borrar el horario del usuario"""
     try:
         user_id = session.get('user_id', 'default')
+        # Limpia el horario en la clase del chatbot
         success = chatbot.clear_schedule(user_id)
 
         print(f"DEBUG - Horario limpiado para {user_id}: {success}")  # Debug
 
+        # Devuelve confirmación al frontend
         return jsonify({'success': success})
 
     except Exception as e:
@@ -131,13 +99,13 @@ def clear_schedule():
 
 @app.route('/debug/schedule/<user_id>')
 def debug_schedule(user_id):
-    """Endpoint de debug para ver horarios"""
+    """Ruta para ver el horario completo de un usuario específico (modo debug)"""
     try:
         schedule = chatbot.get_schedule(user_id)
         return jsonify({
             'user_id': user_id,
             'schedule': schedule,
-            'all_schedules': chatbot.schedule_manager.user_schedules
+            'all_schedules': chatbot.schedule_manager.user_schedules  # Muestra todos los horarios
         })
     except Exception as e:
         return jsonify({'error': str(e)}), 500
@@ -145,7 +113,7 @@ def debug_schedule(user_id):
 
 @app.route('/debug/users')
 def debug_users():
-    """Endpoint de debug para ver todos los usuarios"""
+    """Ruta para listar todos los usuarios registrados en el sistema (modo debug)"""
     try:
         return jsonify({
             'all_users': list(chatbot.schedule_manager.user_schedules.keys()),
@@ -155,11 +123,16 @@ def debug_users():
         return jsonify({'error': str(e)}), 500
 
 
+# Bloque principal que se ejecuta al iniciar el servidor Flask
 if __name__ == '__main__':
     print("=== UMSS ChatBot Iniciando ===")
+    # Muestra la ruta del archivo de intenciones
     print(f"Archivo de intents: {intents_file}")
+    # Muestra la ruta del archivo de info
     print(f"Archivo de info UMSS: {umss_info_file}")
+    # Información del modelo de lenguaje usado
     print(f"Modelo ML: {chatbot.get_model_info()}")
     print("==============================")
 
+    # Inicia la aplicación en modo debug y accesible desde cualquier IP
     app.run(debug=True, host='0.0.0.0', port=5000)

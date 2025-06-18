@@ -36,10 +36,7 @@ Un chatbot inteligente diseñado para ayudar a estudiantes nuevos y antiguos de 
 - ¿Dónde compro valorado de inscripción?
 
 ### 📖 Recursos Académicos
-- ¿Cómo me inscribo en una materia?
 - ¿Dónde encuentro material de estudio?
-- ¿Cómo puedo aprobar esta materia?
-- ¿Qué áreas de trabajo existen en mi carrera?
 
 ## 🚀 Instalación y Configuración
 
@@ -77,16 +74,13 @@ pip install -r requirements.txt
 python -m spacy download es_core_news_sm
 ```
 
-5. **Configurar variables de entorno**
-```bash
-cp .env.example .env
-# Editar .env con tus configuraciones
-```
 
 6. **Entrenar el modelo inicial**
 ```bash
 python scripts/train_model.py
 ```
+permitir s
+salir quit
 
 7. **Ejecutar la aplicación**
 ```bash
@@ -140,15 +134,9 @@ UMSSBot: "El laboratorio de Ingeniería de Sistemas se encuentra en..."
 El chatbot se entrena con:
 - Preguntas frecuentes de estudiantes UMSS
 - Información oficial de la universidad
-- Planes de estudio por carrera
+- Planes de estudio para primer semestre
 - Datos de infraestructura y servicios
 
-## 🧪 Pruebas
-
-Ejecutar las pruebas:
-```bash
-pytest tests/
-```
 
 ## 📈 Métricas de Rendimiento
 
@@ -192,7 +180,6 @@ Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) par
 
 ## 📞 Contacto
 
-- **Email**: tu-email@estudiante.umss.edu.bo
 - **GitHub**: [@tu-usuario](https://github.com/tu-usuario)
 - **Proyecto**: [https://github.com/tu-usuario/UMSSBot](https://github.com/tu-usuario/UMSSBot)
 
