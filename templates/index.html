@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UMSS - Chat de Sugerencias para Estudiantes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <div class="header-content">
+                <div class="logo-section">
+                    <div class="umss-logo">
+                        <i class="fas fa-university"></i>
+                    </div>
+                    <div class="title-section">
+                        <h1>CHAT DE SUGERENCIAS PARA ESTUDIANTES DE PRIMER SEMESTRE</h1>
+                        <p>Universidad Mayor de San Simón - Facultad de Tecnología</p>
+                    </div>
+                </div>
+                <button class="schedule-btn" onclick="showSchedule()">
+                    <i class="fas fa-calendar-alt"></i> Ver Horario
+                </button>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="sendMessage('ver mi horario')">
+                <i class="fas fa-calendar-check"></i> Mi Horario
+            </button>
+            <button class="quick-btn" onclick="sendMessage('armar horario con física')">
+                <i class="fas fa-atom"></i> Física
+            </button>
+            <button class="quick-btn" onclick="sendMessage('armar horario con álgebra')">
+                <i class="fas fa-calculator"></i> Álgebra
+            </button>
+            <button class="quick-btn" onclick="sendMessage('valorados')">
+                <i class="fas fa-file-alt"></i> Valorados
+            </button>
+            <button class="quick-btn" onclick="sendMessage('ayuda')">
+                <i class="fas fa-question-circle"></i> Ayuda
+            </button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="bot-name">Asistente UMSS</span>
+                        <span class="message-time" id="welcomeTime"></span>
+                    </div>
+                    <div class="message-text">
+                        ¡Bienvenido/a al sistema de sugerencias académicas de la UMSS! 🎓
+                        <br><br>
+                        Como estudiante de primer semestre, puedo ayudarte con:
+                        <br><br>
+                        <div class="feature-list">
+                            <div class="feature-item">
+                                <i class="fas fa-calendar-alt"></i>
+                                <strong>Planificación de Horarios</strong> - Organiza tus clases sin conflictos
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                                <strong>Recomendación de Docentes</strong> - Conoce a los mejores profesores
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <strong>Ubicación de Aulas</strong> - Encuentra cualquier salón del campus
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-shopping-cart"></i>
+                                <strong>Compra de Valorados</strong> - Información sobre material de estudio
+                            </div>
+                        </div>
+                        <br>
+                        ¿En qué puedo asistirte hoy?
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="typing-indicator" id="typingIndicator">
+            <div class="message-avatar">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <div class="message-content">
+                <div class="typing-dots">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+                <span class="typing-text">El asistente está escribiendo...</span>
+            </div>
+        </div>
+
+        <div class="chat-input">
+            <div class="input-container">
+                <input type="text" id="messageInput" placeholder="Escribe tu consulta aquí..." autocomplete="off">
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal del Horario -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-calendar-alt"></i> Tu Horario Académico</h2>
+                <span class="close" onclick="closeSchedule()">
+                    <i class="fas fa-times"></i>
+                </span>
+            </div>
+            <div id="scheduleContent" class="schedule-container">
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando horario...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="clear-schedule-btn" onclick="clearSchedule()">
+                    <i class="fas fa-trash-alt"></i> Limpiar Horario
+                </button>
+                <button class="export-schedule-btn" onclick="exportSchedule()">
+                    <i class="fas fa-download"></i> Exportar Horario
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        // Inicializar tiempo de bienvenida
+        document.getElementById('welcomeTime').textContent = getCurrentTime();
+
+        messageInput.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('es-ES', {
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function sendMessage(message = null) {
+            const text = message || messageInput.value.trim();
+            if (!text) return;
+
+            addMessage(text, 'user');
+            if (!message) messageInput.value = '';
+
+            showTyping();
+            sendBtn.disabled = true;
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: text })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    hideTyping();
+                    addMessage(data.response, 'bot');
+                    sendBtn.disabled = false;
+                })
+                .catch(error => {
+                    hideTyping();
+                    addMessage('Lo siento, ocurrió un error técnico. Por favor intenta nuevamente o contacta al soporte técnico.', 'bot');
+                    sendBtn.disabled = false;
+                });
+        }
+
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+
+            const avatarDiv = document.createElement('div');
+            avatarDiv.className = 'message-avatar';
+            avatarDiv.innerHTML = sender === 'user' ?
+                '<i class="fas fa-user"></i>' :
+                '<i class="fas fa-graduation-cap"></i>';
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'message-header';
+            headerDiv.innerHTML = `
+                <span class="${sender}-name">${sender === 'user' ? 'Tú' : 'Asistente UMSS'}</span>
+                <span class="message-time">${getCurrentTime()}</span>
+            `;
+
+            const textDiv = document.createElement('div');
+            textDiv.className = 'message-text';
+            textDiv.innerHTML = formatMessage(text);
+
+            contentDiv.appendChild(headerDiv);
+            contentDiv.appendChild(textDiv);
+            messageDiv.appendChild(avatarDiv);
+            messageDiv.appendChild(contentDiv);
+
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function formatMessage(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\n/g, '<br>')
+                .replace(/(\d+\.)/g, '<br>$1')
+                .replace(/([✅❌⚠️🎓📋🕒🏛️📚📅🔬📊📄❓👋👨‍🏫])/g, '<span class="emoji">$1</span>');
+        }
+
+        function showTyping() {
+            typingIndicator.style.display = 'flex';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        function showSchedule() {
+            const modal = document.getElementById('scheduleModal');
+            const content = document.getElementById('scheduleContent');
+
+            modal.style.display = 'block';
+            content.innerHTML = `
+                <div class="loading-spinner">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Cargando horario...</p>
+                </div>
+            `;
+
+            fetch('/schedule')
+                .then(response => response.json())
+                .then(data => {
+                    content.innerHTML = renderSchedule(data);
+                })
+                .catch(error => {
+                    content.innerHTML = `
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <p>Error al cargar el horario. Por favor intenta nuevamente.</p>
+                        </div>
+                    `;
+                });
+        }
+
+        function closeSchedule() {
+            document.getElementById('scheduleModal').style.display = 'none';
+        }
+
+        function renderSchedule(scheduleData) {
+            if (!scheduleData.subjects || Object.keys(scheduleData.subjects).length === 0) {
+                return `
+                    <div class="empty-schedule">
+                        <i class="fas fa-calendar-plus"></i>
+                        <h3>No tienes materias en tu horario</h3>
+                        <p>¡Comienza agregando algunas materias usando el chat!</p>
+                    </div>
+                `;
+            }
+
+            const days = ['LU', 'MA', 'MI', 'JU', 'VI'];
+            const dayNames = {
+                'LU': 'Lunes',
+                'MA': 'Martes',
+                'MI': 'Miércoles',
+                'JU': 'Jueves',
+                'VI': 'Viernes'
+            };
+
+            let html = '<div class="schedule-grid">';
+
+            days.forEach(dayCode => {
+                html += `<div class="schedule-day ${scheduleData.schedule_grid[dayCode] ? 'has-classes' : 'no-classes'}">
+                    <div class="day-header">
+                        <h4><i class="fas fa-calendar-day"></i> ${dayNames[dayCode]}</h4>
+                        <span class="class-count">${scheduleData.schedule_grid[dayCode] ? scheduleData.schedule_grid[dayCode].length : 0} clases</span>
+                    </div>`;
+
+                if (scheduleData.schedule_grid[dayCode]) {
+                    scheduleData.schedule_grid[dayCode].forEach(classInfo => {
+                        const timeDisplay = classInfo.time.replace(dayCode + ' ', '');
+                        html += `<div class="schedule-class">
+                            <div class="class-header">
+                                <div class="class-subject">${classInfo.subject}</div>
+                                <div class="class-time"><i class="fas fa-clock"></i> ${timeDisplay}</div>
+                            </div>
+                            <div class="class-details">
+                                <div class="class-teacher"><i class="fas fa-chalkboard-teacher"></i> ${classInfo.teacher}</div>
+                                <div class="class-room"><i class="fas fa-map-marker-alt"></i> Aula ${classInfo.classroom}</div>
+                            </div>
+                        </div>`;
+                    });
+                } else {
+                    html += `<div class="no-classes-message">
+                        <i class="fas fa-coffee"></i>
+                        <span>Día libre</span>
+                    </div>`;
+                }
+
+                html += '</div>';
+            });
+
+            html += '</div>';
+            html += `
+                <div class="schedule-summary">
+                    <div class="summary-item">
+                        <i class="fas fa-book"></i>
+                        <span>Total de materias: ${Object.keys(scheduleData.subjects).length}</span>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-clock"></i>
+                        <span>Horas semanales: ${calculateWeeklyHours(scheduleData)}</span>
+                    </div>
+                </div>
+            `;
+
+            return html;
+        }
+
+        function calculateWeeklyHours(scheduleData) {
+            // Implementar cálculo de horas semanales
+            let totalHours = 0;
+            Object.values(scheduleData.schedule_grid).forEach(dayClasses => {
+                if (dayClasses) {
+                    totalHours += dayClasses.length * 2; // Asumiendo 2 horas por clase
+                }
+            });
+            return totalHours;
+        }
+
+        function clearSchedule() {
+            if (confirm('¿Estás seguro de que quieres limpiar todo tu horario? Esta acción no se puede deshacer.')) {
+                fetch('/clear_schedule', { method: 'POST' })
+                    .then(response => response.json())
+                    .then(data => {
+                        closeSchedule();
+                        addMessage('✅ Tu horario ha sido limpiado completamente. Puedes comenzar a agregar nuevas materias.', 'bot');
+                    })
+                    .catch(error => {
+                        addMessage('❌ Error al limpiar el horario. Por favor intenta nuevamente.', 'bot');
+                    });
+            }
+        }
+
+        function exportSchedule() {
+            // Funcionalidad para exportar horario (implementar según necesidades)
+            addMessage('📄 Función de exportación en desarrollo. Pronto podrás descargar tu horario en PDF.', 'bot');
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function (event) {
+            const modal = document.getElementById('scheduleModal');
+            if (event.target === modal) {
+                closeSchedule();
+            }
+        }
+
+        // Auto-focus en el input
+        messageInput.focus();
+    </script>
+</body>
+
+</html>
